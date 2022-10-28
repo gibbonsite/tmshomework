@@ -2,13 +2,12 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Computer {
-    String processor;
-    int ram;
-    int hardDrive;
-    int maxOnOffCycles;
-
-    int numberOfTurnsOn;
-    boolean burnedDown;
+    private String processor;
+    private int ram;
+    private int hardDrive;
+    private int maxOnOffCycles;
+    private int numberOfTurnsOn;
+    private boolean burnedDown;
 
     public Computer(String processor, int ram, int hardDrive, int maxOnOffCycles) {
         this.processor = processor;
