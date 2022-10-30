@@ -1,6 +1,6 @@
 public class Calculator {
-    int firstNumber;
-    int secondNumber;
+    private int firstNumber;
+    private int secondNumber;
 
     public Calculator(int firstNumber, int secondNumber) {
         this.firstNumber = firstNumber;
