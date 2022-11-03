@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class Menu {
     private Scanner scanner = new Scanner(System.in);
+    private ResultOperationHistory history = new ResultOperationHistoryImpl();
 
     public void serve() {
         System.out.println("Welcome to Calculator!");
@@ -13,6 +14,8 @@ public class Menu {
                 int menuItem = getMenuItemIndex();
                 if (menuItem == 1) {
                     processMathematicalOperation();
+                } else if (menuItem == 2) {
+                    history.printHistory();
                 } else {
                     break;
                 }
@@ -26,15 +29,16 @@ public class Menu {
     private void showMenu() {
         System.out.println("Select item from the menu below:");
         System.out.println("1) Calculate mathematical operation");
-        System.out.println("2) Quit");
+        System.out.println("2) Show calculation result history");
+        System.out.println("3) Quit");
     }
 
     private int getMenuItemIndex() throws InvalidMenuChoiceException {
         int menuItem = getInt();
-        if (menuItem == 1 || menuItem == 2) {
+        if (menuItem == 1 || menuItem == 2 || menuItem == 3) {
             return menuItem;
         } else {
-            throw new InvalidMenuChoiceException("Invalid menu item! Expected 1 or 2.");
+            throw new InvalidMenuChoiceException("Invalid menu item! Expected 1, 2 or 3.");
         }
     }
 
@@ -75,11 +79,12 @@ public class Menu {
         } else {
             System.out.println("Error occurred while calculating the result: " + result.getErrorMessage());
         }
+        history.addResult(result);
     }
 
     private double getDouble() {
         while (true) {
-            if (scanner.hasNextDouble()){
+            if (scanner.hasNextDouble()) {
                 return scanner.nextDouble();
             } else {
                 System.out.println("Invalid input! Please, provide float value with double precision.");
@@ -90,7 +95,7 @@ public class Menu {
 
     private int getInt() {
         while (true) {
-            if (scanner.hasNextInt()){
+            if (scanner.hasNextInt()) {
                 return scanner.nextInt();
             } else {
                 System.out.println("Invalid input! Please, provide int value.");
