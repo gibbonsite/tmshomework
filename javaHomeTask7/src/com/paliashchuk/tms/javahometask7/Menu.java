@@ -9,11 +9,15 @@ public class Menu {
         System.out.println("Welcome to Calculator!");
         while (true) {
             showMenu();
-            int menuItem = getMenuItemIndex();
-            if (menuItem == 1) {
-                processMathematicalOperation();
-            } else {
-                break;
+            try {
+                int menuItem = getMenuItemIndex();
+                if (menuItem == 1) {
+                    processMathematicalOperation();
+                } else {
+                    break;
+                }
+            } catch (InvalidMenuChoiceException e) {
+                System.out.println(e.getMessage());
             }
         }
         System.out.println("Goodbye!");
@@ -25,14 +29,12 @@ public class Menu {
         System.out.println("2) Quit");
     }
 
-    private int getMenuItemIndex() {
-        int menuItem;
-        while (true) {
-            menuItem = getInt();
-            if (menuItem == 1 || menuItem == 2) {
-                return menuItem;
-            }
-            System.out.println("Please, enter number 1 or 2.");
+    private int getMenuItemIndex() throws InvalidMenuChoiceException {
+        int menuItem = getInt();
+        if (menuItem == 1 || menuItem == 2) {
+            return menuItem;
+        } else {
+            throw new InvalidMenuChoiceException("Invalid menu item! Expected 1 or 2.");
         }
     }
 
@@ -41,20 +43,29 @@ public class Menu {
         double firstNumber = getDouble();
         System.out.println("Enter second number:");
         double secondNumber = getDouble();
+        scanner.nextLine();
         System.out.println("Enter mathematical operation (+, -, * or /):");
-        String operation = getOperation();
+        MathematicalOperation operation;
+        while (true) {
+            try {
+                operation = getOperation();
+                break;
+            } catch (InvalidMathematicalOperationException e) {
+                System.out.println(e.getMessage());
+            }
+        }
         Calculator calculator = null;
         switch (operation) {
-            case "+":
+            case ADDITION:
                 calculator = new Addition();
                 break;
-            case "-":
+            case SUBTRACTION:
                 calculator = new Subtraction();
                 break;
-            case "*":
+            case MULTIPLICATION:
                 calculator = new Multiplication();
                 break;
-            case "/":
+            case DIVISION:
                 calculator = new Division();
                 break;
         }
@@ -88,23 +99,25 @@ public class Menu {
         }
     }
 
-    private String getOperation() {
-        String operation;
-        while (true) {
-            if (scanner.hasNextLine()) {
-                operation = scanner.nextLine();
-                switch (operation) {
-                    case "*":
-                    case "/":
-                    case "+":
-                    case "-":
-                        return operation;
-                    default:
-                        System.out.println("Invalid input! Please, enter * or /, or +, or -.");
-                }
-            } else {
-                System.out.println("Invalid input! Please, enter * or /, or +, or -.");
+    private MathematicalOperation getOperation() throws InvalidMathematicalOperationException {
+        if (scanner.hasNextLine()) {
+            String operation = scanner.nextLine();
+            switch (operation) {
+                case "*":
+                    return MathematicalOperation.MULTIPLICATION;
+                case "/":
+                    return MathematicalOperation.DIVISION;
+                case "+":
+                    return MathematicalOperation.ADDITION;
+                case "-":
+                    return MathematicalOperation.SUBTRACTION;
+                default:
+                    throw new InvalidMathematicalOperationException("Invalid mathematical operation! "
+                            + "Expected * or /, or +, or -.");
             }
+        } else {
+            throw new InvalidMathematicalOperationException("Please, provide mathematical operation! "
+                    + "Expected * or /, or +, or -.");
         }
     }
 }
