@@ -58,8 +58,12 @@ public class Menu {
                 calculator = new Division();
                 break;
         }
-        double result = calculator.action(firstNumber, secondNumber);
-        System.out.println("The result is " + result);
+        CalculationResult result = calculator.action(firstNumber, secondNumber);
+        if (!result.hasError()) {
+            System.out.println("The result is " + result.getResult());
+        } else {
+            System.out.println("Error occurred while calculating the result: " + result.getErrorMessage());
+        }
     }
 
     private double getDouble() {
