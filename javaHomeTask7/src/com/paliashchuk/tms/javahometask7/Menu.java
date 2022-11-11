@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Menu {
     private Scanner scanner = new Scanner(System.in);
-    private ResultOperationHistory history = new ResultOperationHistoryImpl();
+    private ResultOperationHistory history = new ResultOperationHistoryUsingCollectionsImpl();
 
     public void serve() {
         System.out.println("Welcome to Calculator!");
