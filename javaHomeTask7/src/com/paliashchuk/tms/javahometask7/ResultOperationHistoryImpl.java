@@ -6,7 +6,7 @@ public class ResultOperationHistoryImpl implements ResultOperationHistory {
 
 
     @Override
-    public void addResult(CalculationResult result) {
+    public void addResult(MathematicalOperation operation, CalculationResult result) {
         history[top] = result;
         top = (top + 1) % history.length;
     }
