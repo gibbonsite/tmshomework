@@ -7,7 +7,7 @@ public class ResultOperationHistoryUsingCollectionsImpl implements ResultOperati
     private List<CalculationResult> history = new ArrayList<>();
 
     @Override
-    public void addResult(CalculationResult result) {
+    public void addResult(MathematicalOperation operation, CalculationResult result) {
         history.add(result);
     }
 

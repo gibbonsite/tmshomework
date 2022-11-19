@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Menu {
     private Scanner scanner = new Scanner(System.in);
-    private ResultOperationHistory history = new ResultOperationHistoryUsingCollectionsImpl();
+    private ResultOperationHistory history = new ResultOperationHistoryUsingMapImpl();
 
     public void serve() {
         System.out.println("Welcome to Calculator!");
@@ -79,7 +79,7 @@ public class Menu {
         } else {
             System.out.println("Error occurred while calculating the result: " + result.getErrorMessage());
         }
-        history.addResult(result);
+        history.addResult(operation, result);
     }
 
     private double getDouble() {
